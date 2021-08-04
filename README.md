@@ -11,4 +11,4 @@ Main features: ON/OFF, Pass effects & Adjust effect's speed.
 
 ## Software
 
-This is done on platformio, so it's quite straight forward record on VS code whit it. Also is possible changhe the board model if you want to the code stay the same.
+This is done on platformio, so it's quite straight forward record on VS code whit it. Also is possible changhe the board model if you want, the code stay the same.

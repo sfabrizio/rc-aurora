@@ -7,7 +7,7 @@ namespace State
     int fx_set[] = {1, 255, 4, 5, 6}; // position [1] is set RGB
     String colorsToPlay[] = {"150 0 0", "51 0 51", "46 0 77", "42 128 0", "0 77 102"};
 
-    int spd_i = 2; // start at max speed
+    int spd_i = 3; // start at max speed
     int fx_i = 0;
     int color_i = 0;
 
@@ -19,7 +19,7 @@ namespace State
         switch (btn)
         {
         case BTN::A:
-            switchOnOff();
+            toggleOnOff();
             delay(BTN_DELAY);
             break;
         case BTN::B:
@@ -52,20 +52,40 @@ namespace State
         return "{'cmd':'setRGB','payload':'" + String(colorsToPlay[color_i]) + "'}";
     }
 
-    void switchOnOff()
+    void toggleOnOff()
     {
         if (isOn)
         {
-            Network::publishMsg("{'cmd':'off','payload':''}");
-            isOn = false;
+            switchOff();
+        }
+        else
+        {
+            switchOn();
+        }
+        isOn = !isOn;
+        delay(BTN_DELAY); // x2 delay
+    }
+
+    void switchOn()
+    {
+        if (isColorMode)
+        {
+            Network::publishMsg(get_currentRgb());
         }
         else
         {
             Network::publishMsg(get_currentFx());
             Network::publishMsg(get_currentSpd());
-            isOn = true;
         }
-        delay(BTN_DELAY); // x2 delay
+    }
+
+    void switchOff()
+    {
+        if (isColorMode)
+        {
+            fx_i = 1; // remember index state for next ON.
+        }
+        Network::publishMsg("{'cmd':'off','payload':''}");
     }
 
     void next_effect()

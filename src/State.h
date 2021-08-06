@@ -4,7 +4,9 @@
 
 namespace State {
     void change(byte);
-    void switchOnOff();
+    void toggleOnOff();
+    void switchOn();
+    void switchOff();
     void next_effect();
     void speed_up();
     void speed_down();

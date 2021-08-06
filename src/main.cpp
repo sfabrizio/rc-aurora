@@ -1,5 +1,5 @@
 #include <Arduino.h>
-
+#include <Network.h>
 
 void setup() {
   Serial.begin(115200);
@@ -7,10 +7,12 @@ void setup() {
   pinMode(D3, INPUT); // btn B
   pinMode(D1, INPUT); // btn C
   pinMode(D2, INPUT); // btn D
+  Serial.println("init..");
+  Network::connectWifi();
 }
 
 void loop() {
-  
+
   delay(200);
 
   if (digitalRead(D0) == HIGH) {
@@ -25,5 +27,6 @@ void loop() {
    if (digitalRead(D2) == HIGH) {
      Serial.println("d2 wachin D");
    }
-   
+  
+  Network::checkConnectedWifi();
 }

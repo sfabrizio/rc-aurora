@@ -1,6 +1,6 @@
 #include <Network.h>
 
-#define BTN_DELAY 350
+#define BTN_DELAY 400
 
 namespace State {
     void change(byte);
@@ -8,6 +8,8 @@ namespace State {
     void next_effect();
     void speed_up();
     void speed_down();
+    void next_color();
+    void prev_color();
     String get_currentFx();
     String get_currentSpd();
 };

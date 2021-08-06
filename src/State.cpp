@@ -45,6 +45,7 @@ namespace State
             Network::publishMsg(get_currentSpd());
             isOn = true;
         }
+        delay(BTN_DELAY); // x2 delay
     }
 
     String get_currentFx()

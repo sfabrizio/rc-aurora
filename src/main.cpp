@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include <Network.h>
+#include <State.h>
 
 void setup() {
   Serial.begin(115200);
@@ -13,22 +14,19 @@ void setup() {
 
 void loop() {
   
-  delay(200);
+  delay(300);
   
   if (digitalRead(D0) == HIGH) {
-    Serial.println("btn A turn On state");
-    Network::publishMsg("{'cmd':'fx','payload':'1'}");
-    Network::publishMsg("{'cmd':'spd','payload':'255'}");
-   }
+    State::change(BTN::A);
+  }
    if (digitalRead(D3) == HIGH) {
-     Serial.println("btn B turn Off state");
-     Network::publishMsg("{'cmd':'off','payload':''}");
+    State::change(BTN::B);
    }
    if (digitalRead(D1) == HIGH) {
-     Serial.println("d1 wachin C");
+     State::change(BTN::C);
    }
    if (digitalRead(D2) == HIGH) {
-     Serial.println("d2 wachin D");
+     State::change(BTN::D);
    }
   
   Network::checkConnectedWifi();

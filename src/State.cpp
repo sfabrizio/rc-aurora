@@ -3,20 +3,18 @@
 namespace State
 {
     boolean isOn = false;
+    boolean isColorMode = false;
     int spd_set[] = {50, 200, 240, 255};
-    int fx_set[] = {1, 255, 4, 5, 6}; // position [1] is set RGB
-    // 20 % bright colors:
+    int fx_set[] = {1, 255, 4, 5, 6}; // position [1] is setRGB cmd
+    // 20% bright on these color values:
     String colorsToPlay[] = {"102 0 0", "102 102 0", "102 20 0", "0 102 0", "0 41 102", "77 0 102", "30 0 102"};
     int c_len = 6;   // this has to match color array elements
     int spd_i = 3;   // speed index start at max speed
     int fx_i = 0;    // effect index
     int color_i = 0; // color index
 
-    boolean isColorMode = false;
-
     void change(byte btn)
     {
-
         switch (btn)
         {
         case BTN::A:
@@ -84,7 +82,7 @@ namespace State
     {
         if (isColorMode)
         {
-            fx_i = 1; // remember index state for next ON.
+            fx_i = 1; // remember color state for next power ON.
         }
         Network::publishMsg("{'cmd':'off','payload':''}");
     }
@@ -146,6 +144,7 @@ namespace State
         spd_i++;
         Network::publishMsg(get_currentSpd());
     }
+
     void speed_down()
     {
         if (spd_i == 0)

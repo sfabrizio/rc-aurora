@@ -7,19 +7,22 @@ void setup() {
   pinMode(D3, INPUT); // btn B
   pinMode(D1, INPUT); // btn C
   pinMode(D2, INPUT); // btn D
-  Serial.println("init..");
   Network::connectWifi();
+  Network::connectMqtt();
 }
 
 void loop() {
-
+  
   delay(200);
-
+  
   if (digitalRead(D0) == HIGH) {
-     Serial.println("d0 wachin A");
+    Serial.println("btn A turn On state");
+    Network::publishMsg("{'cmd':'fx','payload':'1'}");
+    Network::publishMsg("{'cmd':'spd','payload':'255'}");
    }
    if (digitalRead(D3) == HIGH) {
-     Serial.println("d3 wachin B");
+     Serial.println("btn B turn Off state");
+     Network::publishMsg("{'cmd':'off','payload':''}");
    }
    if (digitalRead(D1) == HIGH) {
      Serial.println("d1 wachin C");
@@ -29,4 +32,5 @@ void loop() {
    }
   
   Network::checkConnectedWifi();
+  Network::checkConnectedMqtt();
 }

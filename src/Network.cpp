@@ -5,10 +5,6 @@ namespace Network
 
   WiFiClient espClient;
   PubSubClient client(espClient);
-  // unsigned long lastMsg = 0;
-  // #define MSG_BUFFER_SIZE	(50)
-  // char msg[MSG_BUFFER_SIZE];
-  // int value = 0;
 
   void connectWifi()
   {
@@ -36,33 +32,38 @@ namespace Network
 
   void connectMqtt()
   {
-    // Loop until we're reconnected
+    //connecting to a mqtt broker
+    client.setServer(MQTT_SERVER, MQTT_PORT);
+    String client_id = "rc-aurora-";
     while (!client.connected())
     {
-      Serial.print("Attempting MQTT connection...");
-      // Create a random client ID
-
-      String clientId = "rc-aurora-";
-      clientId += String(random(0xffff), HEX);
-      // Attempt to connect
-      if (client.connect(clientId.c_str()))
+      client_id += String(WiFi.macAddress());
+      Serial.println("Connecting to public mqtt broker.....");
+      if (client.connect(client_id.c_str()))
       {
-        Serial.println("connected");
-        // Once connected, publish an announcement...
-        client.publish("myhome", "RC control connected");
-        // ... and resubscribe
-        // client.subscribe("myhome");
+        Serial.println("MQTT broker connected");
       }
       else
       {
-        Serial.print("failed, rc=");
+        Serial.print("failed with state ");
         Serial.print(client.state());
-        Serial.println(" try again in 5 seconds");
-        // Wait 5 seconds before retrying
-        delay(5000);
+        delay(2000);
       }
     }
+    // publish and subscribe
+    client.publish("myhome",client_id.c_str());
   }
+
+void publishMsg(String msg) {
+  client.publish("myhome", msg.c_str());
+}
+
+void checkConnectedMqtt() {
+
+  if (!client.connected()) {
+    connectMqtt();
+  }
+}
 
   /**
 * checks the connection is still alive, if not resets the device

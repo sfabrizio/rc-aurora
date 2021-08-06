@@ -47,7 +47,7 @@ namespace Network
       {
         Serial.print("failed with state ");
         Serial.print(client.state());
-        delay(2000);
+        delay(5000);
       }
     }
     // publish and subscribe

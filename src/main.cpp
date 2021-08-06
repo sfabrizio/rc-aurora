@@ -14,8 +14,6 @@ void setup() {
 
 void loop() {
   
-  delay(300);
-  
   if (digitalRead(D0) == HIGH) {
     State::change(BTN::A);
   }

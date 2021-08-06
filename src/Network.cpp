@@ -38,7 +38,7 @@ namespace Network
     while (!client.connected())
     {
       client_id += String(WiFi.macAddress());
-      Serial.println("Connecting to public mqtt broker.....");
+      Serial.println("Connecting to mqtt broker.....");
       if (client.connect(client_id.c_str()))
       {
         Serial.println("MQTT broker connected");

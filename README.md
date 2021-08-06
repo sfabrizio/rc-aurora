@@ -26,8 +26,8 @@ In `Network.h` you should set you WIFI credential & your mqtt broker address. Th
 ...
 ```
 
-Relarted Projects:
+## Relarted Projects:
 
-- [aurora](https://github.com/garhul/aurora)
-- [aurora-mqtt-server](https://github.com/sfabrizio/aurora-mqtt-server)
-- [aurora-alexa](https://github.com/sfabrizio/aurora-alexa)
+- [aurora](https://github.com/garhul/aurora) - Light's effects/animations for ws2812, ws2811, ws2813 led strips
+- [aurora-mqtt-server](https://github.com/sfabrizio/aurora-mqtt-server) - Simple mqtt broker/pub/sub over nodeJS
+- [aurora-alexa](https://github.com/sfabrizio/aurora-alexa) - Control Aurora devices from Alexa

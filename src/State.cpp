@@ -5,8 +5,8 @@ namespace State
     boolean isOn = false;
     int spd_set[] = {50, 200, 240, 255};
     int fx_set[] = {1, 255, 4, 5, 6}; // position [1] is set RGB
-    String colorsToPlay[] = {"150 0 0", "51 0 51", "46 0 77", "42 128 0", "0 77 102"};
-
+    // Colors: red, yellow, orange, green, blue, pink, violet - 7 
+    String colorsToPlay[] = {"102 0 0", "102 102 0", "102 20 0", "0 102 0", "0 41 102", "77 0 102", "30 0 102"};
     int spd_i = 3; // start at max speed
     int fx_i = 0;
     int color_i = 0;
@@ -112,7 +112,7 @@ namespace State
     void next_color()
     {
         color_i++;
-        if (color_i == 4)
+        if (color_i == 6)
         {
             Network::publishMsg(get_currentRgb());
             color_i = 0;
@@ -126,7 +126,7 @@ namespace State
         if (color_i == 0)
         {
             Network::publishMsg(get_currentRgb());
-            color_i = 4;
+            color_i = 6;
             return;
         }
         Network::publishMsg(get_currentRgb());

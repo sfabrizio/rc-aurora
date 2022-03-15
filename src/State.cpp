@@ -10,7 +10,7 @@ namespace State
     String colorsToPlay[] = {"102 0 0", "102 102 0", "102 20 0", "0 102 0", "0 41 102", "77 0 102", "30 0 102"};
     int c_len = 6;   // this has to match color array elements
     int spd_i = 3;   // speed index start at max speed
-    int fx_i = 0;    // effect index
+    int fx_i = -1;    // effect index
     int color_i = 0; // color index
 
     void change(byte btn)
@@ -90,22 +90,18 @@ namespace State
     void next_effect()
     {
         isColorMode = false;
+        fx_i++;
+         if (fx_i > 4)
+        {
+            fx_i = 0;
+        }
         if (fx_i == 1) // rgb mode
         {
             isColorMode = true;
             Network::publishMsg(get_currentRgb());
-            fx_i++;
             return;
         }
-        if (fx_i == 4)
-        {
-            Network::publishMsg(get_currentFx());
-            fx_i = 0;
-            return;
-        }
-
         Network::publishMsg(get_currentFx());
-        fx_i++;
     }
 
     void next_color()

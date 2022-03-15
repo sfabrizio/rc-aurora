@@ -4,14 +4,14 @@ namespace State
 {
     boolean isOn = false;
     boolean isColorMode = false;
-    int spd_set[] = {50, 200, 240, 255};
+    int spd_set[] = {255, 240, 200, 50};
     int fx_set[] = {1, 255, 4, 5, 6}; // position [1] is setRGB cmd
     // 20% bright on these color values:
     String colorsToPlay[] = {"102 0 0", "102 102 0", "102 20 0", "0 102 0", "0 41 102", "77 0 102", "30 0 102"};
     int c_len = 6;   // this has to match color array elements
-    int spd_i = 3;   // speed index start at max speed
+    int spd_i = -1;   // speed index 
     int fx_i = -1;    // effect index
-    int color_i = 0; // color index
+    int color_i = -1; // color index
 
     void change(byte btn)
     {
@@ -37,12 +37,18 @@ namespace State
     }
 
     String get_currentFx()
-    {
+    {   
+         if(fx_i == -1) {
+             next_effect();
+         }
         return "{'cmd':'fx','payload':'" + String(fx_set[fx_i]) + "'}";
     }
 
     String get_currentSpd()
     {
+        if(spd_i == -1) {
+             speed_down(); // start a max speed
+         }
         return "{'cmd':'spd','payload':'" + String(spd_set[spd_i]) + "'}";
     }
 
@@ -80,10 +86,6 @@ namespace State
 
     void switchOff()
     {
-        if (isColorMode)
-        {
-            fx_i = 1; // remember color state for next power ON.
-        }
         Network::publishMsg("{'cmd':'off','payload':''}");
     }
 
@@ -98,7 +100,7 @@ namespace State
         if (fx_i == 1) // rgb mode
         {
             isColorMode = true;
-            Network::publishMsg(get_currentRgb());
+            next_color();
             return;
         }
         Network::publishMsg(get_currentFx());
@@ -106,51 +108,45 @@ namespace State
 
     void next_color()
     {
-        if (color_i == c_len)
+        color_i++;
+
+        if (color_i > c_len)
         {
-            Network::publishMsg(get_currentRgb());
             color_i = 0;
             return;
         }
         Network::publishMsg(get_currentRgb());
-        color_i++;
     }
 
     void prev_color()
-    {
-        if (color_i == 0)
+    {   
+        color_i--;
+        if (color_i < 0)
         {
-            Network::publishMsg(get_currentRgb());
             color_i = c_len;
-            return;
         }
         Network::publishMsg(get_currentRgb());
-        color_i--;
     }
 
     void speed_up()
     {
-        if (spd_i == 3)
-        {
-            spd_i = 0;
-            Network::publishMsg(get_currentSpd());
-            return;
-        }
+        spd_i--;
 
-        spd_i++;
+        if (spd_i < 0)
+        {
+            spd_i = 3;
+        }
         Network::publishMsg(get_currentSpd());
     }
 
     void speed_down()
     {
-        if (spd_i == 0)
+        
+        spd_i++;
+        if (spd_i > 3 )
         {
-            spd_i = 3;
-            Network::publishMsg(get_currentSpd());
-            return;
+            spd_i = 0;
         }
-
-        spd_i--;
         Network::publishMsg(get_currentSpd());
     }
 };

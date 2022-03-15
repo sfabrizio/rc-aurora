@@ -55,6 +55,11 @@ namespace Network
   }
 
 void publishMsg(String msg) {
+  if(DEBUG) {
+     Serial.print("publishing msg:  ");
+     Serial.print(msg.c_str());
+     Serial.println("");
+  }
   client.publish("myhome", msg.c_str());
 }
 

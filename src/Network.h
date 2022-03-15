@@ -6,6 +6,8 @@
 #define MQTT_SERVER "192.168.1.200"
 #define MQTT_PORT 1883
 
+#define DEBUG false
+
 namespace Network {
   void connectWifi();
   void connectMqtt();

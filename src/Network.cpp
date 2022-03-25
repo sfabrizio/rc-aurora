@@ -16,6 +16,8 @@ namespace Network
     Serial.println(WIFI_SSID);
 
     WiFi.mode(WIFI_STA);
+    WiFi.setSleepMode(WIFI_NONE_SLEEP);
+
     WiFi.begin(WIFI_SSID, WIFI_PWD);
 
     while (WiFi.status() != WL_CONNECTED)
@@ -35,9 +37,10 @@ namespace Network
     //connecting to a mqtt broker
     client.setServer(MQTT_SERVER, MQTT_PORT);
     String client_id = "rc-aurora-";
+    client_id += String(WiFi.macAddress());
+
     while (!client.connected())
     {
-      client_id += String(WiFi.macAddress());
       Serial.println("Connecting to mqtt broker.....");
       if (client.connect(client_id.c_str()))
       {
@@ -45,7 +48,7 @@ namespace Network
       }
       else
       {
-        Serial.print("failed with state ");
+        Serial.println("failed with state: ");
         Serial.print(client.state());
         delay(5000);
       }

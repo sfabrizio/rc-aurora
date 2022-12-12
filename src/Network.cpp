@@ -34,7 +34,11 @@ namespace Network
 
   void connectMqtt()
   {
-    //connecting to a mqtt broker
+    if (WiFi.status() != WL_CONNECTED || client.connected())
+    {
+      return;
+    }
+    // connecting to a mqtt broker
     client.setServer(MQTT_SERVER, MQTT_PORT);
     String client_id = "rc-aurora-";
     client_id += String(WiFi.macAddress());
@@ -54,28 +58,32 @@ namespace Network
       }
     }
     // publish and subscribe
-    client.publish("myhome",client_id.c_str());
+    client.publish("myhome", client_id.c_str());
   }
 
-void publishMsg(String msg) {
-  if(DEBUG) {
-     Serial.print("publishing msg:  ");
-     Serial.print(msg.c_str());
-     Serial.println("");
+  void publishMsg(String msg)
+  {
+    if (DEBUG)
+    {
+      Serial.print("publishing msg:  ");
+      Serial.print(msg.c_str());
+      Serial.println("");
+    }
+    client.publish("myhome", msg.c_str());
   }
-  client.publish("myhome", msg.c_str());
-}
 
-void checkConnectedMqtt() {
-
-  if (!client.connected()) {
-    connectMqtt();
+  void checkConnectedMqtt()
+  {
+    // loop has to be called to keep connection alive, return false if not connected.
+    if (!client.loop())
+    {
+      connectMqtt();
+    }
   }
-}
 
   /**
-* checks the connection is still alive, if not resets the device
-*/
+   * checks the connection is still alive, if not resets the device
+   */
   void checkConnectedWifi()
   {
     if (!WiFi.isConnected())

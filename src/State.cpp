@@ -8,8 +8,10 @@ namespace State
     int fx_set[] = {1, 255, 4, 5, 6}; // position [1] is setRGB cmd
     // 20% bright on these color values:
     String colorsToPlay[] = {"102 0 0", "102 102 0", "102 20 0", "0 102 0", "0 41 102", "77 0 102", "30 0 102"};
-    int c_len = 6;   // this has to match color array elements
-    int spd_i = -1;   // speed index 
+    //  red, yellow, orange, green, cyan, pink, violeta
+
+    int c_len = 6;    // this has to match color array elements
+    int spd_i = -1;   // speed index
     int fx_i = -1;    // effect index
     int color_i = -1; // color index
 
@@ -37,18 +39,20 @@ namespace State
     }
 
     String get_currentFx()
-    {   
-         if(fx_i == -1) {
-             next_effect();
-         }
+    {
+        if (fx_i == -1)
+        {
+            next_effect();
+        }
         return "{'cmd':'fx','payload':'" + String(fx_set[fx_i]) + "'}";
     }
 
     String get_currentSpd()
     {
-        if(spd_i == -1) {
-             speed_down(); // start a max speed
-         }
+        if (spd_i == -1)
+        {
+            speed_down(); // start a max speed
+        }
         return "{'cmd':'spd','payload':'" + String(spd_set[spd_i]) + "'}";
     }
 
@@ -93,7 +97,7 @@ namespace State
     {
         isColorMode = false;
         fx_i++;
-         if (fx_i > 4)
+        if (fx_i > 4)
         {
             fx_i = 0;
         }
@@ -119,7 +123,7 @@ namespace State
     }
 
     void prev_color()
-    {   
+    {
         color_i--;
         if (color_i < 0)
         {
@@ -141,9 +145,9 @@ namespace State
 
     void speed_down()
     {
-        
+
         spd_i++;
-        if (spd_i > 3 )
+        if (spd_i > 3)
         {
             spd_i = 0;
         }

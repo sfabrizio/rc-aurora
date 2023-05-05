@@ -3,8 +3,9 @@
 namespace StateIR
 {
     // 20% bright on these color values:
-    String colorsToPlay[] = {"102 0 0", "0 102 0", "102 102 0", "30 0 102", "128 0 127"};
+    String colorsToPlay[] = {"102 0 0", "0 102 0", "102 102 0", "30 0 102", "179 0 89"};
     // red, green, yellow, violeta/blue , pink
+    // https://www.w3docs.com/tools/color-picker
     void change(uint64_t code)
     {
         switch (code)

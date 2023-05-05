@@ -3,8 +3,8 @@
 namespace StateIR
 {
     // 20% bright on these color values:
-    String colorsToPlay[] = {"102 0 0", "0 102 0", "102 102 0", "30 0 102"};
-    // red, cyan, yellow, violeta
+    String colorsToPlay[] = {"102 0 0", "0 102 0", "102 102 0", "30 0 102", "128 0 127"};
+    // red, green, yellow, violeta/blue , pink
     void change(uint64_t code)
     {
         switch (code)
@@ -27,17 +27,46 @@ namespace StateIR
         case CODE::BLUE:
             setColor(3);
             break;
+        case CODE::WHITE:
+            whiteEffect();
+            break;
+        case CODE::PINK:
+            setColor(4);
+            break;
         case CODE::SMOOTH:
             smoothEffect();
+            break;
+        case CODE::FLASH:
+            flashEffect();
+            break;
+        case CODE::STROBE:
+            flashEffect();
             break;
         default:
             return;
         }
     }
 
+    void strobeEffect()
+    {
+        Network::publishMsg("{'cmd':'fx','payload':'9'}");
+        Network::publishMsg("{'cmd':'spd','payload':'255'}");
+    }
+    void flashEffect()
+    {
+        Network::publishMsg("{'cmd':'fx','payload':'9'}");
+        Network::publishMsg("{'cmd':'spd','payload':'250'}");
+    }
+
+    void whiteEffect()
+    {
+        Network::publishMsg("{'cmd':'fx','payload':'7'}");
+        Network::publishMsg("{'cmd':'spd','payload':'150'}");
+    }
+
     void smoothEffect()
     {
-        Network::publishMsg("{'cmd':'fx','payload':'1'}");
+        Network::publishMsg("{'cmd':'fx','payload':'2'}");
         Network::publishMsg("{'cmd':'spd','payload':'250'}");
     }
 

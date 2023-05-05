@@ -66,9 +66,25 @@ void checkIRstate()
     {
       StateIR::change(CODE::BLUE);
     }
+    if (results.value == CODE::WHITE)
+    {
+      StateIR::change(CODE::WHITE);
+    }
+    if (results.value == CODE::PINK)
+    {
+      StateIR::change(CODE::PINK);
+    }
     if (results.value == CODE::SMOOTH)
     {
       StateIR::change(CODE::SMOOTH);
+    }
+    if (results.value == CODE::FLASH)
+    {
+      StateIR::change(CODE::FLASH);
+    }
+    if (results.value == CODE::STROBE)
+    {
+      StateIR::change(CODE::STROBE);
     }
 
     serialPrintUint64(results.value, HEX);

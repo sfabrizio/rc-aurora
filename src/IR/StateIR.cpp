@@ -3,7 +3,7 @@
 namespace StateIR
 {
     // 20% bright on these color values:
-    String colorsToPlay[] = {"102 0 0", "0 41 102", "102 102 0", "30 0 102"};
+    String colorsToPlay[] = {"102 0 0", "0 102 0", "102 102 0", "30 0 102"};
     // red, cyan, yellow, violeta
     void change(uint64_t code)
     {
@@ -18,7 +18,7 @@ namespace StateIR
         case CODE::RED:
             setColor(0);
             break;
-        case CODE::CYAN:
+        case CODE::GREEN:
             setColor(1);
             break;
         case CODE::YELLOW:
@@ -27,9 +27,18 @@ namespace StateIR
         case CODE::BLUE:
             setColor(3);
             break;
+        case CODE::SMOOTH:
+            smoothEffect();
+            break;
         default:
             return;
         }
+    }
+
+    void smoothEffect()
+    {
+        Network::publishMsg("{'cmd':'fx','payload':'1'}");
+        Network::publishMsg("{'cmd':'spd','payload':'250'}");
     }
 
     void switchOn()

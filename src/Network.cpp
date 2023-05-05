@@ -40,7 +40,7 @@ namespace Network
     }
     // connecting to a mqtt broker
     client.setServer(MQTT_SERVER, MQTT_PORT);
-    String client_id = "rc-aurora-";
+    String client_id = "rc-aurora2-";
     client_id += String(WiFi.macAddress());
 
     while (!client.connected())
